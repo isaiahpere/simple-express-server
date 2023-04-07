@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const cookie = require("./routes/cookie");
-
+const AppError = require("./ErrorClass/AppError");
 const dogRoutes = require("./routes/dogs");
 const catRoutes = require("./routes/cats");
 const adminRoutes = require("./routes/admin");
@@ -48,7 +48,7 @@ const authUser = (req, res, next) => {
   if (phrase === "love") {
     next();
   } else {
-    res.send("You dont have access");
+    throw new AppError("password is required", 401);
   }
 };
 
@@ -69,9 +69,31 @@ app.get("/say", authUser, (req, res) => {
   res.send("you got it!");
 });
 
-// catch all
+app.get("/error", (req, res, next) => {
+  // we can throw errors in routes as well to an error handler
+  next(new AppError("throwing a quicky", 500));
+});
+
+// 404 - not found
 app.use((req, res) => {
   res.status(404).send("NOT FOUND");
+});
+
+// ERROR HANDLER
+
+// error handler - catches errors from anything above
+// where something went wrong
+app.use((err, req, res, next) => {
+  const { status = 500 } = err;
+  res.status(status).send(err);
+});
+
+// ERROR HANDLERS - uses express default
+app.use((err, req, res, next) => {
+  console.log("**************************************");
+  console.log("ERROR");
+  console.log("**************************************");
+  next(err); // call express deafult error handler
 });
 
 app.listen(4000, () => {
