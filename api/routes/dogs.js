@@ -1,24 +1,23 @@
 const express = require("express");
+const app = express();
 const router = express.Router();
 
-router.post("/:id", (req, res) => {
-  res.send("created a new dog");
-});
+const {
+  createSingleDog,
+  fetchAllDogs,
+  fetchSingleDog,
+  updateSingleDog,
+} = require("../controller/dogs");
+const dogMiddleware = require("../middleware/index");
 
-router.get("/", (req, res) => {
-  res.send("You fetched all dogs");
-});
+// ROUTES
+router.get("/", fetchAllDogs);
 
-router.get("/:id", (req, res) => {
-  res.send("You are seeing a single dog");
-});
+router
+  .route("/:id")
+  .post(createSingleDog)
+  .get(dogMiddleware, fetchSingleDog)
+  .put(updateSingleDog);
 
-router.put("/:id", (req, res) => {
-  res.send("UPDATED a single dog");
-});
-
-router.delete("/:id", (req, res) => {
-  res.send("DELETED a single dog");
-});
-
+// EXPORT
 module.exports = router;

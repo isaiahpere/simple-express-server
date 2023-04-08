@@ -1,24 +1,19 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true }); // show all params in url
 
-router.post("/:id", (req, res) => {
-  res.json("created a new cat");
+router.post("/meow", (req, res) => {
+  const { id } = req.params;
+  res.json(`the cat id ${id} meows`);
 });
 
-router.get("/", (req, res) => {
-  res.json("You fetched all cats");
+router.get("/jumps", (req, res) => {
+  const { id } = req.params;
+  res.json(`the cat id ${id} jumps`);
 });
 
-router.get("/:id", (req, res) => {
-  res.json("You are seeing a single cat");
-});
-
-router.put("/:id", (req, res) => {
-  res.josn("UPDATED a single cat");
-});
-
-router.delete("/:id", (req, res) => {
-  res.json("DELETED a single cat");
+router.get("/runs", (req, res) => {
+  const { id } = req.params;
+  res.json(`the cat id ${id} runs`);
 });
 
 module.exports = router;
