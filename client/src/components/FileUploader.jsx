@@ -16,18 +16,35 @@ const FileUploader = () => {
   // }, []);
 
   // handle bulk upload
-  const handlePhotoUpload = (e) => {
+  const handlePhotoUpload = async (e) => {
     e.preventDefault();
 
     let files = e.target.files;
-    let data = new FormData();
+    console.log("fiels");
+    console.log(files);
+    const data = new FormData();
 
-    const filesArray = Array.from(files);
-    filesArray.forEach((file) => {
+    console.log("############# ");
+    console.log(data);
+    console.log("############# ");
+
+    const dataArray = Array.from(files);
+    dataArray.forEach((file) => {
+      console.log("the file in array foreach is: ");
+      console.log(file);
       data.append("photos", file);
     });
 
-    setAddedPhotos(filesArray);
+    // make request to send to api
+    const { data: fileNames } = await axios.post("/upload", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    console.log("*******");
+    console.log(fileNames);
+    console.log("*******");
+
+    // setAddedPhotos(filesArray);
   };
 
   // hanle form submission
@@ -36,7 +53,7 @@ const FileUploader = () => {
 
     console.log("form login here");
 
-    await axios.post("/upload");
+    await axios.post("/upload", { test: "test body" });
   };
 
   // console.log(state photos)

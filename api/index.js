@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -11,10 +15,8 @@ const dogRoutes = require("./routes/dogs");
 const catRoutes = require("./routes/cats");
 const adminRoutes = require("./routes/admin");
 const counterRoutes = require("./routes/counter");
-const photoUploader = require("./routes/upload");
+const uploadRoutes = require("./routes/upload");
 const { asyncWrapper } = require("./utils/helpers");
-
-require("dotenv").config();
 
 // CORS CONFIG
 app.use(
@@ -68,7 +70,7 @@ app.use("/counter", counterRoutes);
 app.use("/dogs", dogRoutes);
 app.use("/cats/:id", catRoutes);
 app.use("/cookie", cookie);
-app.use("/upload", photoUploader);
+app.use("/upload", uploadRoutes);
 
 app.get("/say", authUser, (req, res) => {
   res.send("you got it!");
@@ -98,6 +100,7 @@ app.use((err, req, res, next) => {
   console.log("**************************************");
   console.log("OOOPSIE ERROR");
   console.log("**************************************");
+  console.log(err);
   next(err); // call express deafult error handler
 });
 
