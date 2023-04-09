@@ -5,6 +5,8 @@ const { storage } = require("../cloudinary/index");
 const upload = multer({ storage });
 const { uploadBulkPhotos } = require("../controller/upload");
 
-router.post("/", upload.array("photos"), uploadBulkPhotos);
+// multer parses the files from req and uploads it to cloudinary
+// then appends the path from cloudiary into the req.files
+router.post("/", upload.array("photos", 25), uploadBulkPhotos);
 
 module.exports = router;

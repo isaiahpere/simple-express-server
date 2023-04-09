@@ -1,12 +1,24 @@
 /**
  *
- * uploads images to cloudinary
+ * gets image info coming from multer to parse and upload image cloudinary url to mongodb
  */
 const uploadBulkPhotos = (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
-  console.log("hit bulk load");
-  res.json("you hit bulk upload endpoint");
+  // map req.files to extract cloudinary image data
+  if (req.files && req.files.length > 0) {
+    const filesArray = req.files.map((file) => ({
+      url: file.path,
+      filename: file.filename,
+    }));
+
+    console.log("-------------------------------------");
+    // files
+    console.log(filesArray);
+    console.log("-------------------------------------");
+
+    res.send(filesArray);
+  } else {
+    res.json("no files saved");
+  }
 };
 
 module.exports = {

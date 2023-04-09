@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 100px;
   width: 100vw;
   height: 100vh;
   background-color: beige;
@@ -9,50 +10,41 @@
 
 h1 {
   text-align: center;
-  margin-top: 80px;
-  color: blue;
+  font-size: 80px;
+  margin-bottom: 20px;
+  color: #222;
 }
 
-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 400px;
-  height: 400px;
-  margin-top: 40px;
-  background-color: green;
+h2 {
+  color: #222;
+  font-size: 50px;
+  margin-top: 30px;
 }
 
 .inputContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: solid 1px #dddddd;
-  background-color: transparent;
+  border: solid 1px #222;
+  background-color: black;
+  color: #fff;
   width: 160px;
   padding: 20px 60px;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.inputContainer input {
+.images {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
   width: 100%;
-  visibility: hidden;
 }
 
-form label {
-  width: 100%;
-  font-size: 14px;
-  font-weight: 600;
-  padding-left: 20px;
-}
-
-form button {
-  margin-top: 30px;
-  width: 80px;
-  height: 36px;
-  background-color: #000;
-  color: #fff;
-  border: none;
+.images img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
 }

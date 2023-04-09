@@ -58,12 +58,6 @@ const authUser = (req, res, next) => {
   }
 };
 
-// middle ware for only dogs path
-// app.use("/dogs", (req, res, next) => {
-//   console.log("I LOVE DOGS");
-//   return next();
-// });
-
 // ROUTES
 app.use("/admin", adminRoutes);
 app.use("/counter", counterRoutes);

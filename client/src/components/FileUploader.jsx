@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import axios from "axios";
 
@@ -7,26 +7,13 @@ import styles from "./FileUploader.module.css";
 const FileUploader = () => {
   const [addedPhotos, setAddedPhotos] = useState([]);
 
-  // useEffect(() => {
-  //   const hitBackend = async () => {
-  //     const { data } = await axios.get("/dogs");
-  //     console.log(data);
-  //   };
-  //   hitBackend();
-  // }, []);
-
   // handle bulk upload
   const handlePhotoUpload = async (e) => {
     e.preventDefault();
 
     let files = e.target.files;
-    console.log("fiels");
-    console.log(files);
-    const data = new FormData();
 
-    console.log("############# ");
-    console.log(data);
-    console.log("############# ");
+    const data = new FormData();
 
     const dataArray = Array.from(files);
     dataArray.forEach((file) => {
@@ -40,36 +27,28 @@ const FileUploader = () => {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
-    console.log("*******");
-    console.log(fileNames);
-    console.log("*******");
-
-    // setAddedPhotos(filesArray);
+    setAddedPhotos(fileNames);
   };
-
-  // hanle form submission
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    console.log("form login here");
-
-    await axios.post("/upload", { test: "test body" });
-  };
-
-  // console.log(state photos)
-  console.log("added photos are: ");
-  console.log(addedPhotos);
 
   return (
     <div className={styles.section}>
       <h1>Image Uploader</h1>
-      <form onSubmit={handleFormSubmit}>
-        <label className={styles.inputContainer}>
-          <input type="file" multiple onChange={handlePhotoUpload} />
-          <div>UPLOAD</div>
-        </label>
-        <button>Add photos</button>
-      </form>
+      <label className={styles.inputContainer}>
+        <input type="file" multiple onChange={handlePhotoUpload} />
+        <div>UPLOAD</div>
+      </label>
+      {addedPhotos && addedPhotos.length > 0 && (
+        <>
+          <h2>Images From Cloudinary</h2>
+          <div className={styles.images}>
+            {addedPhotos.map((photo) => (
+              <div key={photo.url}>
+                <img src={photo.url} alt="" />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

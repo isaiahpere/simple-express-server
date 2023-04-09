@@ -10,6 +10,12 @@ const sampleSchema = new mongoose.Schema({
     require: true,
     ref: "Place",
   },
+  image: [
+    {
+      url: String,
+      filename: String,
+    },
+  ],
 });
 
 const SampleModel = mongoose.model("Sample", sampleSchema);
